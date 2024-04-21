@@ -1,9 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const connectDB = require("./config/db");
+const fetchData = require("./script");
 const path = require("path");
 const cors = require("cors");
+const corn = require("node-cron");
 
 connectDB();
 const corsOption = {
@@ -25,7 +28,7 @@ app.use("/files", require("./routes/show"));
 app.use("/files/download", require("./routes/download"));
 
 
-
+corn.schedule("0 1 * * *", fetchData);
 app.listen(port, () => {
     console.log(`app is listening to port ${port}`);
 })
