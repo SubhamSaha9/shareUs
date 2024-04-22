@@ -1,5 +1,6 @@
 const connectDB = require('./config/db');
 const File = require('./models/file');
+const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 connectDB();
 
@@ -9,8 +10,9 @@ async function fetchData() {
     if (files.length) {
         for (const file of files) {
             try {
-                fs.unlinkSync(file.path);
-                // await file.remove();
+                cloudinary.uploader
+                    .destroy(file.filename)
+                    .then(result => console.log(result));
                 console.log(`successfully deleted ${file.filename}`);
                 await File.deleteOne({ filename: file.filename });
             } catch (err) {

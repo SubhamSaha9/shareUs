@@ -3,23 +3,27 @@ const router = require("express").Router();
 let path = require("path");
 const File = require("../models/file");
 const { v4: uuid4 } = require("uuid");
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, "uploads/"),
-    filename: (req, file, cb) => {
-        const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
-        cb(null, uniqueName);
-    },
-})
+const { storage } = require("../cloudConfig");
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => cb(null, "uploads/"),
+//     filename: (req, file, cb) => {
+//         const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+//         cb(null, uniqueName);
+//     },
+// })
 
 let upload = multer({
     storage,
     limits: {
         fileSize: 1000000 * 100
     },
+    // filename: (req, file, cb) => {
+    //     const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+    //     cb(null, uniqueName)
+    // }
 }).single("myfile");
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     // store file
     upload(req, res, async (err) => {
         // if (!req.files) {

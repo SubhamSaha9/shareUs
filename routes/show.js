@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const cloudinary = require('cloudinary').v2;
 const File = require("../models/file");
 
 router.get("/:uuid", async (req, res) => {
@@ -7,10 +8,15 @@ router.get("/:uuid", async (req, res) => {
         if (!file) {
             return res.render("download", { error: "Link has been expired." });
         }
-        return res.render('download', { uuid: file.uuid, fileName: file.filename, fileSize: file.size, downloadLink: `${process.env.APP_BASE_URL}/files/download/${file.uuid}` });
+        const fileName = file.filename;
+        const modifiedString = fileName.replace("uploads/", "");
+        const url = cloudinary.image(file.filename, { flags: `attachment:${modifiedString}` });
+        const regex = /src='([^']+)'/;
+        const match = url.match(regex);
+        return res.render('download', { uuid: file.uuid, fileName: file.filename, fileSize: file.size, downloadLink: match[1] });
     } catch (err) {
         return res.render("download", { error: "Something went wrong!" });
     }
 })
-
+// `${process.env.APP_BASE_URL}/files/download/${file.uuid}`
 module.exports = router;

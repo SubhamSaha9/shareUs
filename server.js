@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
 })
 app.use("/api/files", require("./routes/files"));
 app.use("/files", require("./routes/show"));
-app.use("/files/download", require("./routes/download"));
 
 
 corn.schedule("0 1 * * *", fetchData);
