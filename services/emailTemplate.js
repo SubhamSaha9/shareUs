@@ -148,7 +148,7 @@ module.exports = ({ emailFrom, downloadLink, size, expires }) => {
                             <tr>
                             <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
                                 <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">subham.io Kolkata, West Bengal</span>
-                                <br> Want to share a file? <a href="http://localhost:3000" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">shareUs</a>.
+                                <br> Want to share a file? <a href="https://shareus-subham-io.onrender.com/" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">shareUs</a>.
                             </td>
                             </tr>
                             <!-- content -->
