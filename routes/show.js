@@ -13,9 +13,7 @@ router.get("/:uuid", async (req, res) => {
         const url = cloudinary.image(file.filename, { flags: `attachment:${modifiedString}` });
         const regex = /src='([^']+)'/;
         const match = url.match(regex);
-        console.log(match[1])
         const finalLink = match[1].replace("http:", "https:");
-        console.log(finalLink);
         return res.render('download', { uuid: file.uuid, fileName: file.filename, fileSize: file.size, downloadLink: finalLink });
     } catch (err) {
         return res.render("download", { error: "Something went wrong!" });
